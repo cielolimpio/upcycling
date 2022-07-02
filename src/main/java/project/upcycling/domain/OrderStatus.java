@@ -1,5 +1,5 @@
 package project.upcycling.domain;
 
 public enum OrderStatus {
-    ORDER_COMP, DEPOSIT_COMP
+    FUNDING_READY, FUNDING_COMP, PROJECT_CANCEL, PROJECT_SUCCESS
 }

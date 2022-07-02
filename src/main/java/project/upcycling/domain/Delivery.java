@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static project.upcycling.domain.DeliveryStatus.*;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,4 +21,9 @@ public class Delivery {
 
     @Embedded
     private Address address;
+
+    public Delivery(Address address) {
+        deliveryStatus = FUNDING;
+        this.address = address;
+    }
 }
