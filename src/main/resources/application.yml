@@ -1,9 +1,13 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/upcycling
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:tcp://localhost/~/upcycling
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/upcycling?serverTimezone=Asia/Seoul
+    username: root
+    password: asdf1245
   jpa:
     hibernate:
       ddl-auto: create
