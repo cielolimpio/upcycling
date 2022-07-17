@@ -14,7 +14,7 @@ public class DataSourceConfig {
     @Autowired
     private DataSourceProperties dataSourceProperties;
 
-    @Bean(name = "dataSource")
+    @Bean
     public DataSource dataSource () {
         return DataSourceBuilder.create()
                 .driverClassName(dataSourceProperties.getDriverClassName())

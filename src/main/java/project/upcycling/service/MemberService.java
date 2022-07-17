@@ -1,44 +1,44 @@
 package project.upcycling.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.upcycling.config.SecurityUtil;
 import project.upcycling.domain.Member;
+import project.upcycling.dto.MemberResponseDto;
 import project.upcycling.repository.MemberRepository;
 
-import javax.persistence.Tuple;
-
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService {
 
-    @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
-//    @Autowired
-//    private PasswordEncoder encoder;
-
-    public Long join (Member member) {
-        boolean isValidEmail = validateDuplicateEmail(member);
-        if (isValidEmail) {
-//            String rawPassword = member.getPassword();
-//            String encodedPassword = encoder.encode(rawPassword);
-//
-//            member.setPassword(encodedPassword);
-
-            memberRepository.save(member);
-            return member.getId();
-        } else return null;
-
+    public MemberResponseDto getMyInfoBySecurity() {
+        return memberRepository.findById(SecurityUtil.getCurrentMemberId())
+                .map(MemberResponseDto::of)
+                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
     }
 
-    private boolean validateDuplicateEmail(Member member) {
-        Member findMember = memberRepository.findByEmail(member.getEmail());
-        if (findMember != null) {
-            return false;
-        } else return true;
+    @Transactional
+    public MemberResponseDto changeMemberNickname(String email, String nickname) {
+        Member member = memberRepository.findByEmail(email).
+                orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
+        member.setNickname(nickname);
+        return MemberResponseDto.of(memberRepository.save(member));
+    }
+
+    @Transactional
+    public MemberResponseDto changeMemberPassword(String exPassword, String newPassword) {
+        Member member = memberRepository.findById(SecurityUtil.getCurrentMemberId())
+                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
+        if (!passwordEncoder.matches(exPassword, member.getPassword())) {
+            throw new RuntimeException("비밀번호가 맞지 않습니다");
+        }
+        member.setPassword(passwordEncoder.encode((newPassword)));
+        return MemberResponseDto.of(memberRepository.save(member));
     }
 }
