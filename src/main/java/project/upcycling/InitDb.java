@@ -30,9 +30,21 @@ public class InitDb {
         private final EntityManager em;
         public void dbInit() {
 
-            Member member1 = new Member("email1", "pw1", "ddongssu");
-            Member member2 = new Member("email2", "pw2", "hanjoongyu");
-            Member member3 = new Member("email3", "pw3", "yumin");
+            Member member1 = Member.builder()
+                    .email("email1")
+                    .password("pw1")
+                    .nickname("ddongssu")
+                    .build();
+            Member member2 = Member.builder()
+                    .email("email2")
+                    .password("pw2")
+                    .nickname("hanjoongyu")
+                    .build();
+            Member member3 = Member.builder()
+                    .email("email3")
+                    .password("pw3")
+                    .nickname("yumin")
+                    .build();
 
             em.persist(member1);
             em.persist(member2);
