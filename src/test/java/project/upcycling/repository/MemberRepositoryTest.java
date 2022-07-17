@@ -25,20 +25,20 @@ class MemberRepositoryTest {
     @PersistenceContext
     EntityManager em;
 
-    @Test
-    public void basicCRUD() throws Exception {
-        //given
-        Member member1 = new Member("yumin",
-                new Address("주소주소", "우편우편", "상세상세"), "계좌계좌");
-        memberRepository.save(member1);
-
-        //이름 조회 검증
-        List<Member> yumin = memberRepository.findByName("yumin");
-        for (Member member : yumin) {
-            System.out.println("member.getName() = " + member.getName());
-            System.out.println("member.getAddress() = " + member.getAddress());
-            System.out.println("member.getAccount() = " + member.getAccount());
-        }
-        Assertions.assertThat(yumin.size()).isEqualTo(2);
-    }
+//    @Test
+//    public void basicCRUD() throws Exception {
+//        //given
+//        Member member1 = new Member("yumin",
+//                new Address("주소주소", "우편우편", "상세상세"), "계좌계좌");
+//        memberRepository.save(member1);
+//
+//        //이름 조회 검증
+//        List<Member> yumin = memberRepository.findByName("yumin");
+//        for (Member member : yumin) {
+//            System.out.println("member.getName() = " + member.getName());
+//            System.out.println("member.getAddress() = " + member.getAddress());
+//            System.out.println("member.getAccount() = " + member.getAccount());
+//        }
+//        Assertions.assertThat(yumin.size()).isEqualTo(2);
+//    }
 }
