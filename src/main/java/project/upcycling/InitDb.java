@@ -1,9 +1,6 @@
 package project.upcycling;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import project.upcycling.domain.*;
@@ -11,7 +8,6 @@ import project.upcycling.domain.*;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static project.upcycling.domain.Category.*;
 
@@ -34,15 +30,9 @@ public class InitDb {
         private final EntityManager em;
         public void dbInit() {
 
-            Member member1 = new Member("ddongssu",
-                    new Address("주소1", "우편1", "상세1"),
-                    "계좌번호1");
-            Member member2 = new Member("hanjoongyoo",
-                    new Address("주소2", "우편2", "상세2"),
-                    "계좌번호2");
-            Member member3 = new Member("yumin",
-                    new Address("주소3", "우편3", "상세3"),
-                    "계좌번호3");
+            Member member1 = new Member("email1", "pw1", "ddongssu");
+            Member member2 = new Member("email2", "pw2", "hanjoongyu");
+            Member member3 = new Member("email3", "pw3", "yumin");
 
             em.persist(member1);
             em.persist(member2);
